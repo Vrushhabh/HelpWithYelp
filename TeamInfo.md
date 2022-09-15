@@ -10,8 +10,8 @@
 | Captain     |  ztakiff2@illinois.edu |
 | Member1     |        sample name     |
 | Member1     |   sample@illinois.edu  |
-| Member2     |                        |
-| Member2     |                        |
+| Member2     |     Vrushhabh Patel    |
+| Member2     | vpate81@illinois.edu   |
 | Member3     |                        |
 | Member3     |                        |
 
