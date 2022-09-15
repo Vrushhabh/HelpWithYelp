@@ -8,8 +8,8 @@
 | TeamName    |         sample         |
 | Captain     |       Zach Takiff      |
 | Captain     |  ztakiff2@illinois.edu |
-| Member1     |        Kevin Pei       |
-| Member1     |   kevin2@illinois.edu  |
+| Member1     |        sample name     |
+| Member1     |   sample@illinois.edu  |
 | Member2     |                        |
 | Member2     |                        |
 | Member3     |                        |
