@@ -8,8 +8,8 @@
 | TeamName    |         411 Fiends     |
 | Captain     |       Zach Takiff      |
 | Captain     |  ztakiff2@illinois.edu |
-| Member1     |        sample name     |
-| Member1     |   sample@illinois.edu  |
+| Member1     |     Michael Parekh     |
+| Member1     |  mparekh4@illinois.edu |
 | Member2     |     Vrushhabh Patel    |
 | Member2     | vpate81@illinois.edu   |
 | Member3     |       Maya Nayak       |
