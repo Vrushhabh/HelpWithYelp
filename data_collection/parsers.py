@@ -157,7 +157,7 @@ def convertUser():
             funny = data['funny']
             cool = data['cool']
             elite = data['elite']
-            data_string = user_id +','+ name+',' +review_count+','+ yelping_since+ ',' + str(useful) +','+ str(funny) +',' +str(cool)+','+ str(elite)
+            data_string = user_id +','+ name+',' +str(review_count)+','+ yelping_since+ ',' + str(useful) +','+ str(funny) +',' +str(cool)+','+ str(elite)
             the_file.write('%s\n' % data_string)
     print(count)
 
