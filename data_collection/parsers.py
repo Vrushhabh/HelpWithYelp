@@ -22,25 +22,23 @@ def convertBusiness():
 	    friday varchar(9),
 	    saturday varchar(9),
 	    sunday varchar(9)
-	
     );
-    
-    
     '''
 
     locations = {}
     file1 = open('/Users/vrushhabh/Downloads/Yelp_datasets/yelp_academic_dataset_business.json', 'r')
-    lines = file1.readlines()
+    businesses = file1.readlines()
     csv_line = ''
     count = 0
     with open('BusinessCSV.txt', 'a') as the_file:
-        for line in lines:
+        for business in businesses:
             count+=1
-            data = json.loads(line)
+            data = json.loads(business)
 
             longitude = data['longitude']
             latitude = data['latitude']
 
+            #Used to commit to a one to one relation from businesses to locations table
             if str(longitude) + "," +str(latitude) in locations:
                 count -=1
                 continue
@@ -87,14 +85,17 @@ def convertBusiness():
 
             if attributes and len(attributes) > 0:
                 for key in attributes.keys():
+                    #Only adding attributes listed if they are marked True (Every business has different attributes types and are not consistent)
+                    #Could be queried using like "%attribute%"
                     if attributes[key] == 'True':
                         attribute_string += " "  + key
 
             csv_line = id + ',' +name +','+ address +','+city +','+ state +','+ str(postal) +','+ str(longitude) +','+ str(latitude) +','+ str(stars)  +','+str(review_count)+','+categories+',' + attribute_string + ','
             csv_line += Monday +','+ Tuesday +','+ Wednesday +','+ Thursday +','+ Friday +','+ Saturday +','+ Sunday
             the_file.write('%s\n' % csv_line)
-
-        with open('businness_locations.json','a') as log:
+        
+        #JSON files used for keeping a log of what businesses we are using so no unnecessary reviews are added to tables
+        with open('businness_locations.json','a') as log: 
             json.dump(locations, log)
         with open('business_ids.json','a') as log:
             json.dump(check, log)
@@ -120,11 +121,14 @@ def convertReviews():
     reviews = file1.readlines()
     csv_line = ''
     count = 0
+
+    #used to read business.json that was made to filter out unwanted businesses
     with open("data_collection/business_ids.json", encoding='utf-8', errors='ignore') as json_data:
         business_set = json.load(json_data, strict=False)
     
     
     with open('HWYreview.txt', 'a') as the_file:
+        #might need to use less businesses to reduce the amount of reviews (6 million records)
         for review in reviews:
             count+=1
             data = json.loads(review)
@@ -140,8 +144,10 @@ def convertReviews():
             cool = data['cool']
             text = data['text']
             date = data['date']
-            csv_line = review_id +','+user_id + ',' + business_id +','+str(stars) +','+ str(useful) +','+str(funny)+ ','+ str(cool) +','+ str(text) +','+ str(date)
+            csv_line = review_id +','+user_id + ',' + business_id +','+str(stars) +','+ str(useful) +','+str(funny)+ ','+ str(cool) +','+ text +','+ date
             the_file.write('%s\n' % csv_line)
+
+            #might need a user.json to limit the amount of users in the user table (1.9 million users could result in load on server and querying) 
     print(count)
 
 def convertTips():
@@ -179,7 +185,7 @@ def convertTips():
             date = data['date']
             compliment_count = data['compliment_count']
 
-            csv_line = str(tip_id)+','+user_id +',' + business_id + ',' + str(text) +','+ str(date) +',' + str(compliment_count)
+            csv_line = str(tip_id)+','+user_id +',' + business_id + ',' + text +','+ date +',' + str(compliment_count)
             the_file.write('%s\n' % csv_line)
     print(count)
 
