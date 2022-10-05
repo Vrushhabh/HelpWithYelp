@@ -1,10 +1,37 @@
 import json
 check = {}
 def convertBusiness():
+    '''
+    CREATE TABLE businesses (
+	    buisness_id varchar(25) PRIMARY KEY,
+	    name varchar(30),
+	    address varchar(65),
+	    city varchar(20),
+	    state varchar(15),
+	    postal int,
+	    longitude float(10),
+	    latitude float(10),
+	    stars float(10),
+	    review_conut int,
+	    attributes varchar(1000),
+	    categories varchar(1000),
+	    monday  varchar(9),
+	    tuesday  varchar(9),
+	    wednesday  varchar(9),
+	    thursday   varchar(9),
+	    friday varchar(9),
+	    saturday varchar(9),
+	    sunday varchar(9)
+	
+    );
+    
+    
+    '''
+
     locations = {}
     file1 = open('/Users/vrushhabh/Downloads/Yelp_datasets/yelp_academic_dataset_business.json', 'r')
     lines = file1.readlines()
-    data_string = ''
+    csv_line = ''
     count = 0
     with open('BusinessCSV.txt', 'a') as the_file:
         for line in lines:
@@ -63,9 +90,9 @@ def convertBusiness():
                     if attributes[key] == 'True':
                         attribute_string += " "  + key
 
-            data_string = id + ',' +name +','+ address +','+city +','+ state +','+ str(postal) +','+ str(longitude) +','+ str(latitude) +','+ str(stars)  +','+str(review_count)+','+categories+',' + attribute_string + ','
-            data_string += Monday +','+ Tuesday +','+ Wednesday +','+ Thursday +','+ Friday +','+ Saturday +','+ Sunday
-            the_file.write('%s\n' % data_string)
+            csv_line = id + ',' +name +','+ address +','+city +','+ state +','+ str(postal) +','+ str(longitude) +','+ str(latitude) +','+ str(stars)  +','+str(review_count)+','+categories+',' + attribute_string + ','
+            csv_line += Monday +','+ Tuesday +','+ Wednesday +','+ Thursday +','+ Friday +','+ Saturday +','+ Sunday
+            the_file.write('%s\n' % csv_line)
 
         with open('businness_locations.json','a') as log:
             json.dump(locations, log)
@@ -75,18 +102,32 @@ def convertBusiness():
     print(count)
 
 def convertReviews():
+    '''
+    CREATE TABLE reviews (
+	    review_id varchar(25) PRIMARY KEY,
+	    user_id varchar(25),
+	    business_id varchar(100),
+	    stars int,
+	    useful int,
+	    funny int,
+	    cool int,
+	    text varchar(6000),
+	    date varchar(24)
+	
+    );
+    '''
     file1 = open('/Users/vrushhabh/Downloads/Yelp_datasets/yelp_academic_dataset_review.json', 'r')
-    lines = file1.readlines()
-    data_string = ''
+    reviews = file1.readlines()
+    csv_line = ''
     count = 0
     with open("data_collection/business_ids.json", encoding='utf-8', errors='ignore') as json_data:
         business_set = json.load(json_data, strict=False)
     
     
     with open('HWYreview.txt', 'a') as the_file:
-        for line in lines:
+        for review in reviews:
             count+=1
-            data = json.loads(line)
+            data = json.loads(review)
             review_id = data['review_id']
             user_id = data['user_id']
             business_id = data['business_id']
@@ -99,56 +140,73 @@ def convertReviews():
             cool = data['cool']
             text = data['text']
             date = data['date']
-            data_string = review_id +','+user_id + ',' + business_id +','+str(stars) +','+ str(useful) +','+str(funny)+ ','+ str(cool) +','+ str(text) +','+ str(date)
-            the_file.write('%s\n' % data_string)
+            csv_line = review_id +','+user_id + ',' + business_id +','+str(stars) +','+ str(useful) +','+str(funny)+ ','+ str(cool) +','+ str(text) +','+ str(date)
+            the_file.write('%s\n' % csv_line)
     print(count)
 
 def convertTips():
+    '''
+    CREATE TABLE tips (
+	    tip_id int PRIMARY KEY,
+	    user_id varchar(25),
+	    business_id varchar(30),
+	    text varchar(3000),
+	    date varchar(24),
+	    compliment_count int	
+    );  
+    '''
     file1 = open('data_collection/yelp_academic_dataset_tip.json', 'r')
-    lines = file1.readlines()
-    data_string = ''
+    tips = file1.readlines()
+    csv_line = ''
     count = 0
     with open("data_collection/business_ids.json", encoding='utf-8', errors='ignore') as json_data:
         business_set = json.load(json_data, strict=False)
     
     
     with open('HWYTips.txt', 'a') as the_file:
-        for line in lines:
+        for tip in tips:
             count+=1
-            data = json.loads(line)
-            user_id = data['user_id']
+            data = json.loads(tip)
             business_id = data['business_id']
+
             if business_id not in business_set:
                 count-=1
                 continue
+
+            user_id = data['user_id']
             tip_id = count
             text = data['text']
             date = data['date']
             compliment_count = data['compliment_count']
 
-            data_string = str(tip_id)+','+user_id +',' + business_id + ',' + str(text) +','+ str(date) +',' + str(compliment_count)
-            the_file.write('%s\n' % data_string)
+            csv_line = str(tip_id)+','+user_id +',' + business_id + ',' + str(text) +','+ str(date) +',' + str(compliment_count)
+            the_file.write('%s\n' % csv_line)
     print(count)
 
 def convertUser():
+    '''
+    CREATE TABLE users (
+	    user_id varchar(25) PRIMARY KEY,
+	    name varchar(30),
+	    review_count int,
+	    yelping_since varchar(24),
+	    useful int,
+	    funny int,
+	    cool int,
+	    elite varchar(4)
+    );
+    '''
+
     file1 = open('data_collection/yelp_academic_dataset_user.json', 'r')
-    lines = file1.readlines()
-    data_string = ''
+    users = file1.readlines()
+    csv_line = ''
     count = 0
-    '''
-    user_id varchar(25) PRIMARY KEY,
-	name varchar(30),
-	review_count int,
-	yelping_since varchar(24),
-	useful int,
-	funny int,
-	cool int,
-	elite varchar(4)
-    '''
+
     with open('HWYUser.txt', 'a') as the_file:
-        for line in lines:
+        for user in users:
             count+=1
-            data = json.loads(line)
+            data = json.loads(user)
+
             user_id = data['user_id']
             name = data['name']
             review_count = data['review_count']
@@ -156,11 +214,10 @@ def convertUser():
             useful = data['useful']
             funny = data['funny']
             cool = data['cool']
-            elite = data['elite']
-            data_string = user_id +','+ name+',' +str(review_count)+','+ yelping_since+ ',' + str(useful) +','+ str(funny) +',' +str(cool)+','+ str(elite)
-            the_file.write('%s\n' % data_string)
-    print(count)
+            csv_line = user_id +','+ name+',' +str(review_count)+','+ yelping_since+ ',' + str(useful) +','+ str(funny) +','+str(cool)
+            the_file.write('%s\n' % csv_line)
 
+    print(count)
 convertUser()
     
 
