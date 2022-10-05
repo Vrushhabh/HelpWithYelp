@@ -3,7 +3,7 @@ check = {}
 def convertBusiness():
     '''
     CREATE TABLE businesses (
-	    buisness_id varchar(25) PRIMARY KEY,
+	    business_id varchar(25) PRIMARY KEY,
 	    name varchar(30),
 	    address varchar(65),
 	    city varchar(20),
@@ -12,7 +12,7 @@ def convertBusiness():
 	    longitude float(10),
 	    latitude float(10),
 	    stars float(10),
-	    review_conut int,
+	    review_count int,
 	    attributes varchar(1000),
 	    categories varchar(1000),
 	    monday  varchar(9),
