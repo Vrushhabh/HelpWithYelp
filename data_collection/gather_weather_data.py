@@ -28,7 +28,6 @@ with open('weatherperzipcode.json', 'a') as the_file:
             continue
 
      
-add id column
 
 df = pd.read_csv("weatherperzipcode.json")
 df.insert(0, 'int_d', range(1, len(df) + 1))

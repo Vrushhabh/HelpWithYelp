@@ -30,20 +30,27 @@ def convertBusiness():
     businesses = file1.readlines()
     csv_line = ''
     count = 0
-    with open('BusinessCSV.txt', 'a') as the_file:
+
+    with open('newBusinessCSV.txt', 'a') as the_file:
         for business in businesses:
+            if count > 50000:
+                break
             count+=1
             data = json.loads(business)
+
+            postal = data['postal_code']
+            if not postal.isdigit():
+                count -= 1
+                continue 
+            #takes care of not including international zip codes
 
             longitude = data['longitude']
             latitude = data['latitude']
 
             #Used to commit to a one to one relation from businesses to locations table
-            if str(longitude) + "," +str(latitude) in locations:
-                count -=1
-                continue
-            str_location = str(longitude) +','+ str(latitude)
-            locations[str_location] = 1
+            
+            
+            
 
             id = data['business_id']
 
@@ -53,7 +60,11 @@ def convertBusiness():
             address = data['address']
             city = data['city']
             state = data['state']
-            postal = data['postal_code']
+            
+            if postal not in locations:
+                locations[postal] = 1
+            else:
+                locations[postal] +=1
             stars = data['stars']
             review_count = data['review_count']
 
@@ -103,6 +114,7 @@ def convertBusiness():
     print(count)
 
 def convertReviews():
+    user_tracker = {}
     '''
     CREATE TABLE reviews (
 	    review_id varchar(25) PRIMARY KEY,
@@ -127,17 +139,22 @@ def convertReviews():
         business_set = json.load(json_data, strict=False)
     
     
-    with open('HWYreview.txt', 'a') as the_file:
+    with open('newHWYreview.txt', 'a') as the_file:
         #might need to use less businesses to reduce the amount of reviews (6 million records)
+        
         for review in reviews:
             count+=1
+            if count > 600000:
+                break
             data = json.loads(review)
-            review_id = data['review_id']
-            user_id = data['user_id']
+            review_id =   data['review_id']
             business_id = data['business_id']
             if business_id not in business_set:
                 count-=1
                 continue
+            
+            user_id = data['user_id']
+            user_tracker[user_id] = " "
             stars = data['stars']
             useful = data['useful']
             funny = data['funny']
@@ -146,7 +163,8 @@ def convertReviews():
             date = data['date']
             csv_line = review_id +','+user_id + ',' + business_id +','+str(stars) +','+ str(useful) +','+str(funny)+ ','+ str(cool) +','+ text +','+ date
             the_file.write('%s\n' % csv_line)
-
+        with open('customer_who_gave_reviews.json','a') as log: 
+            json.dump(user_tracker, log)
             #might need a user.json to limit the amount of users in the user table (1.9 million users could result in load on server and querying) 
     print(count)
 
@@ -167,19 +185,26 @@ def convertTips():
     count = 0
     with open("data_collection/business_ids.json", encoding='utf-8', errors='ignore') as json_data:
         business_set = json.load(json_data, strict=False)
+    with open("data_collection/customer_who_gave_reviews.json", encoding='utf-8', errors='ignore') as json_data:
+        valid_users = json.load(json_data, strict=False)
     
     
-    with open('HWYTips.txt', 'a') as the_file:
+    with open('newHWYTips.txt', 'a') as the_file:
         for tip in tips:
             count+=1
             data = json.loads(tip)
             business_id = data['business_id']
+            user_id = data['user_id']
+            if count > 200000:
+                break
+
+            if user_id not in valid_users:
+                count -=1
+                continue
 
             if business_id not in business_set:
                 count-=1
                 continue
-
-            user_id = data['user_id']
             tip_id = count
             text = data['text']
             date = data['date']
@@ -207,13 +232,22 @@ def convertUser():
     users = file1.readlines()
     csv_line = ''
     count = 0
-
-    with open('HWYUser.txt', 'a') as the_file:
+    with open("data_collection/customer_who_gave_reviews.json", encoding='utf-8', errors='ignore') as json_data:
+        valid_users = json.load(json_data, strict=False)
+    
+    with open('newHWYUser.txt', 'a') as the_file:
         for user in users:
             count+=1
+            if count > 250000:
+                break
             data = json.loads(user)
-
             user_id = data['user_id']
+            
+            
+            if user_id not in valid_users:
+
+                count -=1
+                break
             name = data['name']
             review_count = data['review_count']
             yelping_since = data['yelping_since']
@@ -224,9 +258,4 @@ def convertUser():
             the_file.write('%s\n' % csv_line)
 
     print(count)
-convertUser()
-    
-
-
-
-
+convertTips()   
