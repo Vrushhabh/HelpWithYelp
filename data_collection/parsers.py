@@ -31,10 +31,15 @@ def convertBusiness():
     csv_line = ''
     count = 0
 
-    with open('newBusinessCSV.txt', 'a') as the_file:
+    with open('newBusinessCSV2.txt', 'a') as the_file:
+        print("bruhh")
         for business in businesses:
-            if count > 50000:
+            if count > 180000:
+
                 break
+            if count < 120000:
+                count+=1
+                continue
             count+=1
             data = json.loads(business)
 
@@ -67,11 +72,18 @@ def convertBusiness():
                 locations[postal] +=1
             stars = data['stars']
             review_count = data['review_count']
+            categories = ''
 
             if data['categories']:
-                categories = data['categories'].replace(',', '')
+                with open('categoriesYelp.txt', 'a') as the_file2:
+                    for stringg in data['categories'].split(","):
+                        categoryStr = stringg + ',' + id
+                        the_file2.write('%s\n' % categoryStr)
+                    
             else:
                 categories = ""
+
+         
 
             attributes = (data['attributes'])
             attribute_string = ""
@@ -95,21 +107,25 @@ def convertBusiness():
                 Sunday =   ''
 
             if attributes and len(attributes) > 0:
-                for key in attributes.keys():
+                with open('attributesYelp1.txt', 'a') as the_file1:
+                    for key in attributes.keys():
                     #Only adding attributes listed if they are marked True (Every business has different attributes types and are not consistent)
                     #Could be queried using like "%attribute%"
-                    if attributes[key] == 'True':
-                        attribute_string += " "  + key
+                        if attributes[key] == 'True':
+                            attributeStr = key + ',' + id
+                            the_file1.write('%s\n' % attributeStr)
+                            
+                        
 
-            csv_line = id + ',' +name +','+ address +','+city +','+ state +','+ str(postal) +','+ str(longitude) +','+ str(latitude) +','+ str(stars)  +','+str(review_count)+','+categories+',' + attribute_string + ','
+            csv_line = id + ',' +name +','+ address +','+city +','+ state +','+ str(postal) +','+ str(longitude) +','+ str(latitude) +','+ str(stars)  +','+str(review_count)+',' + attribute_string + ','
             csv_line += Monday +','+ Tuesday +','+ Wednesday +','+ Thursday +','+ Friday +','+ Saturday +','+ Sunday
             the_file.write('%s\n' % csv_line)
         
         #JSON files used for keeping a log of what businesses we are using so no unnecessary reviews are added to tables
-        with open('businness_locations.json','a') as log: 
-            json.dump(locations, log)
-        with open('business_ids.json','a') as log:
-            json.dump(check, log)
+        # with open('businness_locations.json','a') as log: 
+        #     json.dump(locations, log)
+        # with open('business_ids.json','a') as log:
+        #     json.dump(check, log)
 
     print(count)
 
@@ -228,26 +244,18 @@ def convertUser():
     );
     '''
 
-    file1 = open('data_collection/yelp_academic_dataset_user.json', 'r')
+    file1 = open('yelp_academic_dataset_user.json', 'r')
     users = file1.readlines()
     csv_line = ''
     count = 0
-    with open("data_collection/customer_who_gave_reviews.json", encoding='utf-8', errors='ignore') as json_data:
-        valid_users = json.load(json_data, strict=False)
-    
-    with open('newHWYUser.txt', 'a') as the_file:
+  
+    with open('newHWYUser1.txt', 'a') as the_file:
         for user in users:
             count+=1
             if count > 250000:
                 break
             data = json.loads(user)
             user_id = data['user_id']
-            
-            
-            if user_id not in valid_users:
-
-                count -=1
-                break
             name = data['name']
             review_count = data['review_count']
             yelping_since = data['yelping_since']
@@ -258,4 +266,4 @@ def convertUser():
             the_file.write('%s\n' % csv_line)
 
     print(count)
-convertTips()   
+convertBusiness()   

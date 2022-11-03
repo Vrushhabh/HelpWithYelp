@@ -27,8 +27,7 @@ with open('weatherperzipcode.json', 'a') as the_file:
         except:
             continue
 
-     
-
+# Add primary key value 
 df = pd.read_csv("weatherperzipcode.json")
 df.insert(0, 'int_d', range(1, len(df) + 1))
 df.to_csv("WeatherPerZipCode.csv", index=False)
