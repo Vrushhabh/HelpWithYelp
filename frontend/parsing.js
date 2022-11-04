@@ -1,3 +1,15 @@
+/**
+ * EXAMPLE USAGE:
+ * 
+ * const c = new CategoryCounter(json_string);
+ * console.log(c.find_max_n_categories(3)); // Prints the three most frequent categories
+ * 
+ * const r = new ReviewCounter(json_string);
+ * // Prints reviews in the range [0, 4) (reviews are sorted in descending order by star rating).
+ * console.log(r.get_reviews(0, 4)); 
+ * 
+ */
+
 /** Class housing the business category and frequency information. */
 class CategoryCounter {
     /**
