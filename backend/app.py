@@ -10,7 +10,7 @@ dataBase = mysql.connector.connect(
 
 
 #get reviews from businesses in same zip code that operate well
-@app.route('/reviewsFromBusiness/<postal>', methods=["GET"])
+@app.route('/reviews-from-zip/<postal>', methods=["GET"])
 def get_reviews_via_zip(postal):
     query_str1 = "SELECT review_id, text, user_id, business_id, name, review_stars,stars, useful FROM reviews INNER JOIN (SELECT * FROM businesses where postal = "
     postal_arg = str(postal)
@@ -29,12 +29,36 @@ def get_reviews_via_zip(postal):
     myresult = mycursor.fetchall()
     json_data=[]
 
-    #append each review into 
+    #append each review into json data
     for x in myresult:
       json_data.append(dict(zip(row_headers,x)))
 
     return json.dumps(json_data)
       
 
+# get the number of categories from each zip postal code
+@app.route('/categories-from-zip/<postal>', methods=["GET"])
+def get_num_of_categories(postal):
    
+    query_str1 = "SELECT a.category, count(a.category) FROM (SELECT * FROM businesses where stars >= 3 and postal ="
+    postal_arg = str(postal) + ")"
+    query_str2 = " as b inner join (Select * FROM categories1 where business_id in (Select business_id from categories1 where category = 'Restaurants') ) a using (business_id) group by a.category order by count(a.category) desc"
+  
+
+    query = query_str1 + postal_arg + query_str2 
     
+
+    mycursor = dataBase.cursor()
+    mycursor.execute(query) 
+
+    # make json keys to send to frontend
+    row_headers=[x[0] for x in mycursor.description] 
+    myresult = mycursor.fetchall()
+    json_data=[]
+
+    #append each review into json data
+    for x in myresult:
+      json_data.append(dict(zip(row_headers,x)))
+
+    return json.dumps(json_data)
+          
