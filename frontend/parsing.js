@@ -52,3 +52,90 @@ class CategoryCounter {
         }
     }
 }
+
+/** Class housing the review information. */
+class ReviewCounter {
+    /**
+     * Create a Review Counter.
+     * @param {string} review_response - The JSON string containing review information.
+     */
+    constructor(review_response) {
+        this.review_response = review_response;
+        this.reviews = this.json_to_reviews();
+        this.sorted_reviews = []
+        this.sort_reviews();
+    }
+
+    /*
+    * Converts the JSON representation of reviews to an Object.
+    */
+    json_to_reviews() {
+        const obj = JSON.parse(this.review_response);
+
+        let review_counts = {}
+
+        for (let i = 0; i < obj.length; i++) {
+            let num_stars = parseInt(obj[i]["review_stars"]);
+            let reviews_with_stars = review_counts[num_stars] || [];
+            reviews_with_stars.push([obj[i]["name"], obj[i]["text"]]);
+            review_counts[num_stars] = reviews_with_stars;
+        }
+
+        return review_counts
+    }
+
+    /**
+     * Sort the reviews by the review stars.
+     */
+    sort_reviews() {
+        let dict = this.reviews;
+
+        this.sorted_reviews = Object.keys(dict).map(function(key) {
+            return [key, dict[key]];
+        });
+
+        this.sorted_reviews.sort(function(first, second) {
+            return second[0] - first[0];
+        });
+    }
+
+    /**
+     * Finds the reviews in the range [start, end)
+     * @param {number} start - The starting index.
+     * @param {number} end - The ending index.
+     * @returns {Array} - An array containing the reviews in the range [start, end)
+     */
+    get_reviews(start, end) {
+        if (start < 0 || end < 0 || end < start) {
+            throw new Error("Invalid start and end inputs");
+        }
+
+        let reviews = [];
+
+        let idx = 0;
+
+        for (let i = 0; i < this.sorted_reviews.length; i++) {
+            let num_stars = this.sorted_reviews[i][0];
+            let num_reviews_for_stars = this.sorted_reviews[i][1].length;
+
+            if (idx + num_reviews_for_stars < start) {
+                idx += num_reviews_for_stars;
+                continue;
+            }
+
+            let j = 0;
+            
+            while (idx < end && j < num_reviews_for_stars) {
+                if (idx < start) {
+                    idx++;
+                } else {
+                    reviews.push([num_stars, this.sorted_reviews[i][1][j]]);
+                    idx++;
+                    j++;
+                }
+            }
+        }
+
+        return reviews;
+    }
+}
