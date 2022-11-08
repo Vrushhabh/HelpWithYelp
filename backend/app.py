@@ -12,7 +12,7 @@ dataBase = mysql.connector.connect(
 #get reviews from businesses in same zip code that operate well
 @app.route('/reviews-from-zip/<postal>', methods=["GET"])
 def get_reviews_via_zip(postal):
-    query_str1 = "SELECT review_id, text, user_id, business_id, name, review_stars,stars, useful FROM reviews INNER JOIN (SELECT * FROM businesses where postal = "
+    query_str1 = "SELECT * FROM reviews INNER JOIN (SELECT * FROM businesses where postal = "
     postal_arg = str(postal)
     query_str2 = " and stars >= "
     stars_arg = str(3.5) + ")"
@@ -71,6 +71,7 @@ def delete_review(review_id):
     print(query)
 
     return "successfully deleted"
+
 
 
 
