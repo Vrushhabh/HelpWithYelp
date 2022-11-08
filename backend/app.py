@@ -59,8 +59,8 @@ def get_num_of_categories(postal):
       json_data.append(dict(zip(row_headers,x)))
 
     return json.dumps(json_data)
-          
-# get the number of categories from each zip postal code
+           
+# get the number of categories from each zip postal codef
 @app.route('/delete-unhelpful-review/<review_id>', methods=["GET"]) #change to post
 def delete_review(review_id):
     query_str1 = "DELETE FROM reviews WHERE "
