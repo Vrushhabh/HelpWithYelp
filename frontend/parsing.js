@@ -29,8 +29,6 @@ class CategoryCounter {
     json_to_category_counts() {
         // Create on Object from the JSON
         const obj = JSON.parse(this.category_response);
-
-        console.log(obj);
         
         for (let i = 0; i < obj.length; i++) {
             this.category_counts[String(obj[i].category).trim()] = obj[i]['count(a.category)'];
