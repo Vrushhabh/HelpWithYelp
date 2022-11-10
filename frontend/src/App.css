@@ -70,3 +70,12 @@
   font-size: calc(2vmin);
   cursor: pointer;
 }
+
+.Header-links {
+  background-color: #282c34;
+  color: white;
+  align-items: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
