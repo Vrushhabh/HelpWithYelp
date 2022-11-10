@@ -22,14 +22,14 @@ function Footer() {
         <input
           className='Footer-input'
           type='text'
-          name='business-city'
-          placeholder='City'
+          name='business-state'
+          placeholder='State (ex. IL)'
         />
         <input
           className='Footer-input'
           type='text'
-          name='business-parking-type'
-          placeholder='Parking Type'
+          name='business-postal-code'
+          placeholder='Postal Code'
         />
         <p>
           <input className='Footer-button' type='submit' value='Submit' />
