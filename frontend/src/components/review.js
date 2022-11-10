@@ -1,15 +1,12 @@
 import React from 'react';
 
-function Review() {
+function Review(review) {
   return (
     <>
       <div className='Review-box'>
-        <h4>Santa Barbara Shellfish Company</h4>
+        <h4>{review.review[1][0]}</h4>
         <h4>⭐⭐⭐⭐⭐</h4>
-        <p>
-          Location + Crabs = 5 stars. This is better than most places in
-          California when it comes to crab
-        </p>
+        <p>{review.review[1][1]}</p>
         <p className='Text-ids'>
           <i>Business ID: SZU9c8V2GuREDN5KgyHFJw</i>
         </p>

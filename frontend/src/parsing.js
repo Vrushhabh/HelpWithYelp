@@ -69,14 +69,14 @@ export class CategoryCounter {
 }
 
 /** Class housing the review information. */
-class ReviewCounter {
+export class ReviewCounter {
   /**
    * Create a Review Counter.
    * @param {Object} review_response - Object containing review information
    */
   constructor(review_response) {
     this.review_response = review_response.data;
-    this.reviews = this.object_to_reviews();
+    this.reviews = this.obj_to_response();
     this.sorted_reviews = [];
     this.sort_reviews();
   }
