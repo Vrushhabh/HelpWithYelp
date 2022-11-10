@@ -80,10 +80,24 @@ def delete_review(review_id):
     return "successfully deleted"
 
 
+# change a schedule of a wrong time 
+@app.route('/change-hours/<business_id>/<day>/<start_time>/<end_time>', methods=["GET"]) #change to post
+def change_schedule(business_id,day,start_time,end_time):
+    start_time2 = start_time.split(":")
+    end_time2 = end_time.split(":")
+
+    if int(start_time2[0]) > int(end_time2[0]):
+      return "start time is after end time Code: 400"
+
+    query_str1 = "UPDATE businesses "
+    time_arg = "SET " +day + " " +"= " +"'"+start_time + '-'+end_time+"'"
+    business_arg = "WHERE business_id = " + "'"+business_id+"'"
+    
+    query = query_str1 + time_arg +" "+  business_arg + ";"
+    mycursor = dataBase.cursor()
+    mycursor.execute(query) 
+
+    return "successfully changed 200"
 
 
 
-   
-
-
-          
