@@ -1,10 +1,10 @@
 /**
  * EXAMPLE USAGE:
  * 
- * const c = new CategoryCounter(JavaScript);
+ * const c = new CategoryCounter(obj);
  * console.log(c.find_max_n_categories(3)); // Prints the three most frequent categories
  * 
- * const r = new ReviewCounter(json_string);
+ * const r = new ReviewCounter(obj);
  * // Prints reviews in the range [0, 4) (reviews are sorted in descending order by star rating).
  * console.log(r.get_reviews(0, 4)); 
  * 
