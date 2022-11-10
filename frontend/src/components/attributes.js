@@ -4,6 +4,15 @@ import '../App.css';
 function Attributes() {
   return (
     <>
+      <form>
+        <input
+          className='Footer-input'
+          type='text'
+          name='zip-code'
+          placeholder='Search by zip code'
+        />
+        <input className='Footer-button' type='submit' value='Submit' />
+      </form>
       <h5>
         Common attributes of businesses which were successful in this category:
       </h5>
