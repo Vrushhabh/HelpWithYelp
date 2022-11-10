@@ -1,7 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 import mysql.connector
+from flask_cors import CORS
 import json
+
 app = Flask(__name__)
+CORS(app)
 dataBase = mysql.connector.connect(
         host="35.193.38.77",
         user="root",
@@ -32,6 +35,7 @@ def get_reviews_via_zip(postal):
     #append each review into json data
     for x in myresult:
       json_data.append(dict(zip(row_headers,x)))
+    
 
     return json.dumps(json_data)
       
@@ -57,6 +61,9 @@ def get_num_of_categories(postal):
     #append each review into json data
     for x in myresult:
       json_data.append(dict(zip(row_headers,x)))
+
+    
+
 
     return json.dumps(json_data)
            
