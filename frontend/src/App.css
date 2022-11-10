@@ -129,3 +129,13 @@ a {
   margin: 150px 0px;
   color: #adadad;
 }
+
+.Update-hours-dropdown {
+  border-radius: 5px;
+  width: 125px;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px;
+  font-size: 15px;
+  padding: 5px 0px;
+}

@@ -20,7 +20,8 @@ function Reviews() {
     );
 
     const r = new ReviewCounter(result);
-    const topReviews = r.get_reviews(0, 5);
+    const topReviews = r.get_reviews(0, 10);
+    console.log(topReviews);
     setReviews(topReviews);
   };
 
@@ -44,10 +45,10 @@ function Reviews() {
           />
           <input className='Footer-button' type='submit' value='Submit' />
         </form>
-        <h5>Random reviews for the selected area code:</h5>
+        <h5>Highest reviews for the selected area code:</h5>
         <div className='Review-container'>
           {reviews.map((review) => (
-            <Review key={review} review={review} />
+            <Review key={review[1].review_id} review={review} />
           ))}
         </div>
         <Hours />
