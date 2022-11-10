@@ -11,7 +11,7 @@
  */
 
 /** Class housing the business category and frequency information. */
-class CategoryCounter {
+export class CategoryCounter {
     /**
      * Create a CategoryCounter.
      * @param {Object} category_response - Object mapping categories to their frequencies
@@ -66,7 +66,7 @@ class CategoryCounter {
 }
 
 /** Class housing the review information. */
-class ReviewCounter {
+export class ReviewCounter {
     /**
      * Create a Review Counter.
      * @param {Object} review_response - Object containing review information
