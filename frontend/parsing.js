@@ -1,10 +1,12 @@
 /**
  * EXAMPLE USAGE:
  * 
- * const c = new CategoryCounter(obj);
+ * let obj1 = await axios.get('http://127.0.0.1:5000/categories-from-zip/93101');
+ * const c = new CategoryCounter(obj1);
  * console.log(c.find_max_n_categories(3)); // Prints the three most frequent categories
  * 
- * const r = new ReviewCounter(obj);
+ * let obj2 = await axios.get('http://127.0.0.1:5000/reviews-from-zip/93101');
+ * const r = new ReviewCounter(obj2);
  * // Prints reviews in the range [0, 4) (reviews are sorted in descending order by star rating).
  * console.log(r.get_reviews(0, 4)); 
  * 
