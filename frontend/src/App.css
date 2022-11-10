@@ -79,3 +79,43 @@
   display: flex;
   justify-content: space-between;
 }
+
+a {
+  color: #fff;
+}
+
+.Review-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 25px;
+  float: left;
+}
+
+.Review-box {
+  border: 3px solid #fff;
+  border-radius: 5px;
+  background-color: #46494f;
+  padding: 15px 30px;
+  width: 700px;
+  float: left;
+}
+
+.Hours-box {
+  border: 3px solid #fff;
+  border-radius: 5px;
+  background-color: rgb(62, 62, 67);
+  padding: 15px 30px;
+  width: 150px;
+  float: left;
+  color: #adadad;
+}
+
+.Text-ids {
+  font-size: 10px;
+  color: #adadad;
+}
+
+.Text-hours {
+  font-size: 12px;
+  color: #adadad;
+}
