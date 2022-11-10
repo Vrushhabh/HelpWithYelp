@@ -98,6 +98,3 @@ def change_schedule(business_id,day,start_time,end_time):
     mycursor.execute(query) 
 
     return "successfully changed 200"
-
-
-
