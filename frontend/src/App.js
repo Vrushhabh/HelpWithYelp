@@ -1,18 +1,18 @@
-import logo from './logo.png';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Attributes from './components/attributes';
-import Footer from './components/footer';
+import Reviews from './pages/reviews';
+import Home from './pages/home';
+import Insights from './pages/insights';
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <h1>Help with Yelp</h1>
-        <Attributes />
-        <Footer />
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/reviews' element={<Reviews />} />
+        <Route path='/insights' element={<Insights />} />
+      </Routes>
+    </Router>
   );
 }
 
