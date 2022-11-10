@@ -1,7 +1,7 @@
 /**
  * EXAMPLE USAGE:
  * 
- * const c = new CategoryCounter(json_string);
+ * const c = new CategoryCounter(JavaScript);
  * console.log(c.find_max_n_categories(3)); // Prints the three most frequent categories
  * 
  * const r = new ReviewCounter(json_string);
@@ -14,22 +14,22 @@
 class CategoryCounter {
     /**
      * Create a CategoryCounter.
-     * @param {string} category_response - The JSON string mapping categories to their frequencies.
+     * @param {Object} category_response - Object mapping categories to their frequencies
      */
     constructor(category_response) {
-        this.category_response = category_response;
+        this.category_response = category_response.data;
         this.category_counts = {};
         this.sorted_category_counts = [];
-        this.json_to_category_counts();
+        this.obj_to_category_counts();
     }
 
     /*
-    * Converts the JSON representation of categories and their frequencies to a sorted array (sorted by descending order of frequency).
+    * Converts the Object representation of categories and their frequencies to a sorted array (sorted by descending order of frequency).
     */
-    json_to_category_counts() {
+    obj_to_category_counts() {
         // Create on Object from the JSON
-        const obj = JSON.parse(this.category_response);
-        
+        let obj = this.category_response;
+
         for (let i = 0; i < obj.length; i++) {
             this.category_counts[String(obj[i].category).trim()] = obj[i]['count(a.category)'];
         }
@@ -69,20 +69,20 @@ class CategoryCounter {
 class ReviewCounter {
     /**
      * Create a Review Counter.
-     * @param {string} review_response - The JSON string containing review information.
+     * @param {Object} review_response - Object containing review information
      */
     constructor(review_response) {
-        this.review_response = review_response;
-        this.reviews = this.json_to_reviews();
+        this.review_response = review_response.data;
+        this.reviews = this.object_to_reviews();
         this.sorted_reviews = []
         this.sort_reviews();
     }
 
     /*
-    * Converts the JSON representation of reviews to an Object.
+    * Converts the Object representation of reviews to a review_counts map.
     */
-    json_to_reviews() {
-        const obj = JSON.parse(this.review_response);
+    obj_to_response() {
+        let obj = this.review_response;
 
         let review_counts = {}
 
