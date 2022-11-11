@@ -11,9 +11,14 @@ function Hours() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const result = await axios.post(
+    const result = await axios.get(
       `http://127.0.0.1:5000/change-hours/${businessId}/${day}/${startTime}/${endTime}`
     );
+
+    setStartTime('');
+    setEndTime('');
+    setDay('');
+    setBusinessId('');
 
     console.log(result);
   };
