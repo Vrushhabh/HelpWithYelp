@@ -125,9 +125,10 @@ def add_business(name,postal,state,categories):
   print(val)
   mycursor = dataBase.cursor()
   mycursor.execute(query_str1,val) 
-  dataBase.commit()
+ 
   
-  myresult = mycursor.fetchall()
+  myresult = mycursor.fetchone()
+  dataBase.commit()
   print(myresult)
   with open("counter.txt", "w") as f:
       f.writelines(str(lines[0]))
