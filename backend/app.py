@@ -98,3 +98,38 @@ def change_schedule(business_id,day,start_time,end_time):
     mycursor.execute(query) 
 
     return "successfully changed 200"
+
+
+
+# change a schedule of a wrong time 
+@app.route('/add-business/<name>/<postal>/<state>/<categories>', methods=["GET"]) #change to post
+def add_business(name,postal,state,categories):
+
+  """INSERT INTO table_name (column1, column2, rcolumn3, ...)
+    VALUES (value1, value2, value3, ...);"""
+  new_count= 0
+  with open("counter.txt") as f:
+    lines = f.readlines()
+    print(lines)
+    lines[0] =  int(lines[0]) + 1
+    print(lines[0])
+
+  
+
+
+
+  query_str1 = "INSERT INTO businesses1 (business_id,name,postal,state,categories) VALUES (%s, %s,%s, %s,%s)"
+  val = (str(lines[0]),name, (postal),state, categories)
+ 
+  print(val)
+  mycursor = dataBase.cursor()
+  mycursor.execute(query_str1,val) 
+  dataBase.commit()
+  
+  myresult = mycursor.fetchall()
+  print(myresult)
+  with open("counter.txt", "w") as f:
+      f.writelines(str(lines[0]))
+
+    
+  return "successfully changed 200"
