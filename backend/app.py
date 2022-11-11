@@ -125,8 +125,6 @@ def add_business(name,postal,state,categories):
   myresult = mycursor.fetchone()
   dataBase.commit()
   print(myresult)
-  with open("counter.txt", "w") as f:
-      f.writelines(str(lines[0]))
 
     
   return "successfully changed 200"
