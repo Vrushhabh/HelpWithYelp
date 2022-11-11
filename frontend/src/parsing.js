@@ -1,12 +1,10 @@
 /**
  * EXAMPLE USAGE:
  *
- * let obj1 = await axios.get('http://127.0.0.1:5000/categories-from-zip/93101');
- * const c = new CategoryCounter(obj1);
+ * const c = new CategoryCounter(JavaScript);
  * console.log(c.find_max_n_categories(3)); // Prints the three most frequent categories
  *
- * let obj2 = await axios.get('http://127.0.0.1:5000/reviews-from-zip/93101');
- * const r = new ReviewCounter(obj2);
+ * const r = new ReviewCounter(json_string);
  * // Prints reviews in the range [0, 4) (reviews are sorted in descending order by star rating).
  * console.log(r.get_reviews(0, 4));
  *
@@ -25,7 +23,7 @@ export class CategoryCounter {
     this.obj_to_category_counts();
   }
 
-  /*
+  /**
    * Converts the Object representation of categories and their frequencies to a sorted array (sorted by descending order of frequency).
    */
   obj_to_category_counts() {
@@ -69,22 +67,22 @@ export class CategoryCounter {
 }
 
 /** Class housing the review information. */
-class ReviewCounter {
+export class ReviewCounter {
   /**
    * Create a Review Counter.
    * @param {Object} review_response - Object containing review information
    */
   constructor(review_response) {
     this.review_response = review_response.data;
-    this.reviews = this.object_to_reviews();
+    this.reviews = this.obj_to_reviews();
     this.sorted_reviews = [];
     this.sort_reviews();
   }
 
-  /*
+  /**
    * Converts the Object representation of reviews to a review_counts map.
    */
-  obj_to_response() {
+  obj_to_reviews() {
     let obj = this.review_response;
 
     let review_counts = {};
@@ -92,7 +90,8 @@ class ReviewCounter {
     for (let i = 0; i < obj.length; i++) {
       let num_stars = parseInt(obj[i]['review_stars']);
       let reviews_with_stars = review_counts[num_stars] || [];
-      reviews_with_stars.push([obj[i]['name'], obj[i]['text']]);
+      let review = new Review(obj[i]);
+      reviews_with_stars.push(review);
       review_counts[num_stars] = reviews_with_stars;
     }
 
@@ -125,6 +124,10 @@ class ReviewCounter {
       throw new Error('Invalid start and end inputs');
     }
 
+    if (!this.sorted_reviews) {
+      return [];
+    }
+
     let reviews = [];
 
     let idx = 0;
@@ -152,5 +155,22 @@ class ReviewCounter {
     }
 
     return reviews;
+  }
+}
+
+/** Class representing a review. */
+export class Review {
+  constructor(obj) {
+    this.name = obj['name'];
+    this.text = obj['text'];
+    this.review_id = obj['review_id'];
+    this.business_id = obj['business_id'];
+    this.monday = obj['monday'];
+    this.tuesday = obj['tuesday'];
+    this.wednesday = obj['wednesday'];
+    this.thursday = obj['thursday'];
+    this.friday = obj['friday'];
+    this.saturday = obj['saturday'];
+    this.sunday = obj['sunday'];
   }
 }
