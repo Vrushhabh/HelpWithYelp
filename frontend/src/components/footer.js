@@ -1,6 +1,20 @@
 import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Footer() {
+  const [reviewId, setReviewId] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    await axios.get(
+      `http://127.0.0.1:5000/delete-unhelpful-review/${reviewId}`
+    );
+
+    setReviewId('');
+  };
+
   return (
     <div className='Attributes-container'>
       <div className='Attributes-boxes'>
@@ -45,11 +59,13 @@ function Footer() {
           standards) hinder our ability to do this. We encourage business owners
           to report such reviews here.
         </p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             className='Footer-input'
             type='text'
             name='review-id'
+            value={reviewId}
+            onChange={(event) => setReviewId(event.target.value)}
             placeholder='Review ID'
           />
           <input className='Footer-button' type='submit' value='Submit' />
