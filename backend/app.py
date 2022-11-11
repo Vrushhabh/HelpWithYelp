@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import mysql.connector
 from flask_cors import CORS
 import json
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -112,15 +113,9 @@ def add_business(name,postal,state,categories):
 
   """INSERT INTO table_name (column1, column2, rcolumn3, ...)
     VALUES (value1, value2, value3, ...);"""
-  new_count= 0
-  with open("counter.txt") as f:
-    lines = f.readlines()
-    print(lines)
-    lines[0] =  int(lines[0]) + 1
-    print(lines[0])
 
   query_str1 = "INSERT INTO businesses (business_id,name,postal,state,categories) VALUES (%s, %s,%s, %s,%s)"
-  val = (str(lines[0]),name, (postal),state, categories)
+  val = (str(os.urandom(32))[0:19],name, (postal),state, categories)
  
   print(val)
   mycursor = dataBase.cursor()
