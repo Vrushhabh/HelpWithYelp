@@ -118,7 +118,7 @@ def add_business(name,postal,state,categories):
 
 
 
-  query_str1 = "INSERT INTO businesses1 (business_id,name,postal,state,categories) VALUES (%s, %s,%s, %s,%s)"
+  query_str1 = "INSERT INTO businesses (business_id,name,postal,state,categories) VALUES (%s, %s,%s, %s,%s)"
   val = (str(lines[0]),name, (postal),state, categories)
  
   print(val)
