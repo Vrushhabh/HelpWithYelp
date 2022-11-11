@@ -35,6 +35,7 @@ def get_reviews_via_zip(postal):
     #append each review into json data
     for x in myresult:
       json_data.append(dict(zip(row_headers,x)))
+    dataBase.commit()
     
 
     return json.dumps(json_data)
@@ -61,6 +62,8 @@ def get_num_of_categories(postal):
     #append each review into json data
     for x in myresult:
       json_data.append(dict(zip(row_headers,x)))
+    dataBase.commit()
+    
 
     
 
@@ -75,7 +78,8 @@ def delete_review(review_id):
     query = query_str1 + reviewid_arg
     mycursor = dataBase.cursor()
     mycursor.execute(query) 
-    print(query)
+    dataBase.commit()
+    
 
     return "successfully deleted"
 
@@ -96,6 +100,7 @@ def change_schedule(business_id,day,start_time,end_time):
     query = query_str1 + time_arg +" "+  business_arg + ";"
     mycursor = dataBase.cursor()
     mycursor.execute(query) 
+    dataBase.commit()
 
     return "successfully changed 200"
 
@@ -113,10 +118,6 @@ def add_business(name,postal,state,categories):
     print(lines)
     lines[0] =  int(lines[0]) + 1
     print(lines[0])
-
-  
-
-
 
   query_str1 = "INSERT INTO businesses (business_id,name,postal,state,categories) VALUES (%s, %s,%s, %s,%s)"
   val = (str(lines[0]),name, (postal),state, categories)
