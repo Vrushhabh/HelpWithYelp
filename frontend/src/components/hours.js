@@ -1,31 +1,60 @@
 import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Hours() {
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [day, setDay] = useState('');
+  const [businessId, setBusinessId] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const result = await axios.post(
+      `http://127.0.0.1:5000/change-hours/${businessId}/${day}/${startTime}/${endTime}`
+    );
+
+    console.log(result);
+  };
+
   return (
     <div className='Update-hours-box'>
       <h5>Incorrect business hours? Update them here:</h5>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           className='Footer-input'
           type='text'
-          name='zip-code'
-          placeholder='Enter the correct hours'
+          name='start-time'
+          value={startTime}
+          onChange={(event) => setStartTime(event.target.value)}
+          placeholder='Start time'
         />
         <br />
-        <select className='Update-hours-dropdown' name='day' id='day'>
-          <option value='monday'>Monday</option>
-          <option value='tuesday'>Tuesday</option>
-          <option value='wednesday'>Wednesday</option>
-          <option value='thursday'>Thursday</option>
-          <option value='friday'>Friday</option>
-          <option value='saturday'>Saturday</option>
-          <option value='sunday'>Sunday</option>
-        </select>
+        <input
+          className='Footer-input'
+          type='text'
+          name='end-time'
+          value={endTime}
+          onChange={(event) => setEndTime(event.target.value)}
+          placeholder='End time'
+        />
         <br />
         <input
           className='Footer-input'
           type='text'
-          name='zidp-code'
+          name='day'
+          value={day}
+          onChange={(event) => setDay(event.target.value)}
+          placeholder='Day of the week'
+        />
+        <br />
+        <input
+          className='Footer-input'
+          type='text'
+          name='business-id'
+          value={businessId}
+          onChange={(event) => setBusinessId(event.target.value)}
           placeholder='Business ID'
         />
         <br />

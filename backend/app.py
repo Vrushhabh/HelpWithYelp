@@ -13,7 +13,7 @@ dataBase = mysql.connector.connect(
 
 
 #get reviews from businesses in same zip code that operate well
-@app.route('/reviews-from-zip/<postal>', methods=["GET"])
+@app.route('/reviews-from-zip/<postal>', methods=["GET"], strict_slashes=False)
 def get_reviews_via_zip(postal):
     query_str1 = "SELECT * FROM reviews INNER JOIN (SELECT * FROM businesses where postal = "
     postal_arg = str(postal)
@@ -41,7 +41,7 @@ def get_reviews_via_zip(postal):
       
 
 # get the number of categories from each zip postal code
-@app.route('/categories-from-zip/<postal>', methods=["GET"])
+@app.route('/categories-from-zip/<postal>', methods=["GET"], strict_slashes=False)
 def get_num_of_categories(postal):
    
     query_str1 = "SELECT a.category, count(a.category) FROM (SELECT * FROM businesses where stars >= 3 and postal ="
@@ -68,7 +68,7 @@ def get_num_of_categories(postal):
     return json.dumps(json_data)
            
 # get the number of categories from each zip postal codef
-@app.route('/delete-unhelpful-review/<review_id>', methods=["GET"]) #change to post
+@app.route('/delete-unhelpful-review/<review_id>', methods=["GET"], strict_slashes=False) #change to post
 def delete_review(review_id):
     query_str1 = "DELETE FROM reviews WHERE "
     reviewid_arg = "reviews.review_id like " +" '" + str(review_id) +"'"
@@ -81,7 +81,7 @@ def delete_review(review_id):
 
 
 # change a schedule of a wrong time 
-@app.route('/change-hours/<business_id>/<day>/<start_time>/<end_time>', methods=["GET"]) #change to post
+@app.route('/change-hours/<business_id>/<day>/<start_time>/<end_time>', methods=["GET"], strict_slashes=False) #change to post
 def change_schedule(business_id,day,start_time,end_time):
     start_time2 = start_time.split(":")
     end_time2 = end_time.split(":")
@@ -102,7 +102,7 @@ def change_schedule(business_id,day,start_time,end_time):
 
 
 # change a schedule of a wrong time 
-@app.route('/add-business/<name>/<postal>/<state>/<categories>', methods=["GET"]) #change to post
+@app.route('/add-business/<name>/<postal>/<state>/<categories>', methods=["GET"], strict_slashes=False) #change to post
 def add_business(name,postal,state,categories):
 
   """INSERT INTO table_name (column1, column2, rcolumn3, ...)
