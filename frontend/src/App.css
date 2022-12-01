@@ -139,3 +139,10 @@ a {
   font-size: 15px;
   padding: 5px 0px;
 }
+
+.Insights-text {
+  font-size: 20px;
+  margin: 50px 20%;
+  text-align: left;
+  font-style: italic;
+}
