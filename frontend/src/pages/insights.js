@@ -14,7 +14,6 @@ function Insights() {
       <header className='App-header'>
         <div className='Header-links'>
           <Link to='/'>Home</Link>
-          <Link to='/reviews'>Reviews</Link>
         </div>
         <img src={logo} className='App-logo' alt='logo' />
         <h1>Help with Yelp</h1>
