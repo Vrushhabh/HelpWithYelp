@@ -11,7 +11,7 @@ function Home() {
       <header className='App-header'>
         <div className='Header-links'>
           <Link to='/reviews'>Reviews</Link>
-          <Link to='/weather'>Weather</Link>
+          <Link to='/seating'>Outdoor Seating</Link>
         </div>
         <img src={logo} className='App-logo' alt='logo' />
         <h1>Help with Yelp</h1>

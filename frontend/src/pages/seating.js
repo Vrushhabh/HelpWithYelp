@@ -3,9 +3,9 @@ import logo from '../logo.png';
 import '../App.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Temperature from '../components/temperature';
+import Weather from '../components/weather';
 
-function Weather() {
+function Seating() {
   const [zipCode, setZipCode] = useState([]);
 
   const handleSubmit = async (event) => {
@@ -21,7 +21,6 @@ function Weather() {
         </div>
         <img src={logo} className='App-logo' alt='logo' />
         <h1>Help with Yelp</h1>
-        <h2>Weather</h2>
         <form onSubmit={handleSubmit}>
           <input
             className='Footer-input'
@@ -33,10 +32,11 @@ function Weather() {
           />
           <input className='Footer-button' type='submit' value='Submit' />
         </form>
+        <h5>Weather information for the selected area code:</h5>
+        <Weather />
       </header>
-      <Temperature />
     </div>
   );
 }
 
-export default Weather;
+export default Seating;
