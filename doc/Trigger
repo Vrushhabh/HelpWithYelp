@@ -1,0 +1,35 @@
+delimiter //
+CREATE TRIGGER business_trig
+BEFORE INSERT ON businesses
+FOR EACH ROW
+BEGIN
+IF NEW.monday IS NULL THEN 
+SET NEW.monday = '9:0-17:0'; 
+END IF;
+
+IF NEW.tuesday IS NULL THEN 
+SET NEW.tuesday = '9:0-17:0'; 
+END IF;
+
+IF NEW.wednesday IS NULL THEN 
+SET NEW.wednesday = '9:0-17:0'; 
+END IF;
+
+IF NEW.thursday IS NULL THEN 
+SET NEW.thursday = '9:0-17:0'; 
+END IF;
+
+IF NEW.friday IS NULL THEN 
+SET NEW.friday = '9:0-17:0'; 
+END IF;
+
+IF NEW.saturday IS NULL THEN 
+SET NEW.saturday = '10:0-4:0'; 
+END IF;
+
+IF NEW.sunday IS NULL THEN 
+SET NEW.sundaybusinesses = '10:0-3:0'; 
+END IF;
+
+
+END;//
