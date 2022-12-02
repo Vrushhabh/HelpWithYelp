@@ -147,4 +147,28 @@ def call_stored_pro():
       #     print(str(result.fetchall()))
       return "200"  
 
+  #get reviews from businesses in same zip code that operate well
+@app.route('/return-weather-data/<postal>', methods=["GET"], strict_slashes=False)
+def get_weather_data(postal):
+    query_str1 = "SELECT * FROM LocalWeather WHERE postal = "
+    postal_arg = str(postal)
+
+    query = query_str1 + postal_arg 
+
+    mycursor = dataBase.cursor()
+    mycursor.execute(query) 
+
+    # make json keys to send to frontend
+    row_headers=[x[0] for x in mycursor.description] 
+    myresult = mycursor.fetchall()
+    json_data=[]
+
+    #append each review into json data
+    for x in myresult:
+      json_data.append(dict(zip(row_headers,x)))
+    dataBase.commit()
     
+
+    return json.dumps(json_data)
+
+  
