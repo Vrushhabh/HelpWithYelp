@@ -1,18 +1,31 @@
 import React from 'react';
 
-function Weather() {
+function Weather(weather) {
+  let isOutdoorSeating = '';
+
+  if (weather.weather.outdoorSeating == 1) {
+    isOutdoorSeating = '✅';
+  } else {
+    isOutdoorSeating = '❌';
+  }
+
   return (
     <>
       <div className='Review-box'>
-        <h4>90001</h4>
-        <h4>Outdoor Seating ={'>'} ✅</h4>
+        <h2>{weather.weather.postal}</h2>
+        <h4>
+          Outdoor Seating ={'>'} {isOutdoorSeating}
+        </h4>
         <h5>
           Based on the provided area code, we have found that outdoor seating is
-          generally available in this area right now.
+          generally most available in this area during the month of{' '}
+          <u>{weather.weather.highestTempMonth}</u>.
         </h5>
         <h5>
-          For the best chances of outdoor seating and the best weather in
-          general, we recommend visiting this region around August.
+          <i>
+            This prediction is based on historical temperature and precipitation
+            data provided through the weather API.
+          </i>
         </h5>
       </div>
     </>
