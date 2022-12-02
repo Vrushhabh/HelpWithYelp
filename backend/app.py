@@ -128,3 +128,23 @@ def add_business(name,postal,state,categories):
 
     
   return "successfully changed 200"
+
+@app.route('/call-stored/', methods=["GET"], strict_slashes=False)
+def call_stored_pro():
+   
+       
+      cursor = dataBase.cursor()
+      #call procedure to make table
+      cursor.callproc('weather')
+      res = cursor.stored_results()
+
+      for result in cursor.stored_results():
+        myresult =result.fetchall()
+        for x in myresult:
+          print(x)
+         # print out the result
+      # for result in cursor.stored_results():
+      #     print(str(result.fetchall()))
+      return "200"  
+
+    
